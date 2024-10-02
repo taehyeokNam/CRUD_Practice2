@@ -2,6 +2,7 @@ package com.example.crud_practice2.domain.todo.service;
 
 import com.example.crud_practice2.domain.todo.dto.TodoAddRequest;
 import com.example.crud_practice2.domain.todo.dto.TodoAddResponse;
+import com.example.crud_practice2.domain.todo.dto.TodoGetResponse;
 import com.example.crud_practice2.domain.todo.entity.Todo;
 import com.example.crud_practice2.domain.todo.respository.TodoRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,14 @@ public class TodoService {
         Todo savedTodo = todoRepository.save(newTodo);
 
         return new TodoAddResponse(savedTodo);
+    }
+
+    public TodoGetResponse getTodo(long todoId) {
+
+        Todo todo = todoRepository.findById(todoId).orElseThrow(()-> new NullPointerException("존재하지 않는 일정입니다"));
+
+        return new TodoGetResponse(todo);
+
+
     }
 }

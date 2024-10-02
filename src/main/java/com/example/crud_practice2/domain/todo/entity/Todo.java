@@ -1,6 +1,5 @@
 package com.example.crud_practice2.domain.todo.entity;
 
-import com.example.crud_practice2.domain.todo.Timestamped;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
