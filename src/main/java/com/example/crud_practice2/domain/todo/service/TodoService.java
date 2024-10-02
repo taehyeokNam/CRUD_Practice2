@@ -3,6 +3,7 @@ package com.example.crud_practice2.domain.todo.service;
 import com.example.crud_practice2.domain.todo.dto.TodoAddRequest;
 import com.example.crud_practice2.domain.todo.dto.TodoAddResponse;
 import com.example.crud_practice2.domain.todo.dto.TodoGetResponse;
+import com.example.crud_practice2.domain.todo.dto.TodoUpdateRequest;
 import com.example.crud_practice2.domain.todo.entity.Todo;
 import com.example.crud_practice2.domain.todo.respository.TodoRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,9 @@ public class TodoService {
     public TodoAddResponse addTodo(TodoAddRequest todoAddRequest) {
 
         Todo newTodo = new Todo(
+                todoAddRequest.getUserName(),
                 todoAddRequest.getTitle(),
-                todoAddRequest.getManagerName(),
-                todoAddRequest.getPassword()
+                todoAddRequest.getDescription()
         );
 
         Todo savedTodo = todoRepository.save(newTodo);
@@ -37,5 +38,16 @@ public class TodoService {
         return new TodoGetResponse(todo);
 
 
+    }
+
+    @Transactional
+    public void updateTodo(long todoId, TodoUpdateRequest todoUpdateRequest) {
+        Todo todo = todoRepository.findById(todoId).orElseThrow(()-> new NullPointerException("존재하지 않는 일정입니다."));
+
+        todo.updateTodo(
+                todoUpdateRequest.getUserName(),
+                todoUpdateRequest.getTitle(),
+                todoUpdateRequest.getDescription()
+        );
     }
 }

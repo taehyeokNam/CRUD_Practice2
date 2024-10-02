@@ -18,8 +18,13 @@ public class Todo extends Timestamped {
     private String title;
     private String description;
 
-    public Todo(Long id, String userName, String title, String description) {
-        this.id = id;
+    public Todo(String userName, String title, String description) {
+        this.userName = userName;
+        this.title = title;
+        this.description = description;
+    }
+
+    public void updateTodo(String userName, String title, String description) {
         this.userName = userName;
         this.title = title;
         this.description = description;
