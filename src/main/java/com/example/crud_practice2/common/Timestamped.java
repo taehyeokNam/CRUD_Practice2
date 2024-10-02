@@ -1,4 +1,4 @@
-package com.example.crud_practice2.domain.todo.entity;
+package com.example.crud_practice2.common;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class TodoAddResponse {
+public class TodoCreateResponse {
 
     private final long id;
     private final String userName;
@@ -15,7 +15,7 @@ public class TodoAddResponse {
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
-    public TodoAddResponse(Todo todo) {
+    public TodoCreateResponse(Todo todo) {
         this.id = todo.getId();
         this.userName = todo.getUserName();
         this.title = todo.getTitle();

@@ -1,7 +1,7 @@
 package com.example.crud_practice2.domain.todo.controller;
 
-import com.example.crud_practice2.domain.todo.dto.TodoAddRequest;
-import com.example.crud_practice2.domain.todo.dto.TodoAddResponse;
+import com.example.crud_practice2.domain.todo.dto.TodoCreateRequest;
+import com.example.crud_practice2.domain.todo.dto.TodoCreateResponse;
 import com.example.crud_practice2.domain.todo.dto.TodoGetResponse;
 import com.example.crud_practice2.domain.todo.dto.TodoUpdateRequest;
 import com.example.crud_practice2.domain.todo.service.TodoService;
@@ -15,8 +15,8 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping("/todos")
-    public TodoAddResponse addTodo(@RequestBody TodoAddRequest todoAddRequest) {
-        return todoService.addTodo(todoAddRequest);
+    public TodoCreateResponse createTodo(@RequestBody TodoCreateRequest todoCreateRequest) {
+        return todoService.createTodo(todoCreateRequest);
     }
 
     @GetMapping("/todos/{todoid}")

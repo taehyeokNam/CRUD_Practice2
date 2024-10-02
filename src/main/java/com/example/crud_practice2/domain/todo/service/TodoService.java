@@ -1,7 +1,7 @@
 package com.example.crud_practice2.domain.todo.service;
 
-import com.example.crud_practice2.domain.todo.dto.TodoAddRequest;
-import com.example.crud_practice2.domain.todo.dto.TodoAddResponse;
+import com.example.crud_practice2.domain.todo.dto.TodoCreateRequest;
+import com.example.crud_practice2.domain.todo.dto.TodoCreateResponse;
 import com.example.crud_practice2.domain.todo.dto.TodoGetResponse;
 import com.example.crud_practice2.domain.todo.dto.TodoUpdateRequest;
 import com.example.crud_practice2.domain.todo.entity.Todo;
@@ -18,17 +18,17 @@ public class TodoService {
     private final TodoRepository todoRepository;
 
     @Transactional
-    public TodoAddResponse addTodo(TodoAddRequest todoAddRequest) {
+    public TodoCreateResponse createTodo(TodoCreateRequest todoCreateRequest) {
 
         Todo newTodo = new Todo(
-                todoAddRequest.getUserName(),
-                todoAddRequest.getTitle(),
-                todoAddRequest.getDescription()
+                todoCreateRequest.getUserName(),
+                todoCreateRequest.getTitle(),
+                todoCreateRequest.getDescription()
         );
 
         Todo savedTodo = todoRepository.save(newTodo);
 
-        return new TodoAddResponse(savedTodo);
+        return new TodoCreateResponse(savedTodo);
     }
 
     public TodoGetResponse getTodo(long todoId) {
