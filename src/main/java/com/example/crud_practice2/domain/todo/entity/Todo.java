@@ -14,13 +14,14 @@ public class Todo extends Timestamped {
 
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+    private String userName;
     private String title;
-    private String managerName;
-    private String password;
+    private String description;
 
-    public Todo(String title, String managerName, String password) {
+    public Todo(Long id, String userName, String title, String description) {
+        this.id = id;
+        this.userName = userName;
         this.title = title;
-        this.managerName = managerName;
-        this.password = password;
+        this.description = description;
     }
 }
