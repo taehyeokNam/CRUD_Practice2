@@ -8,19 +8,19 @@ import java.time.LocalDateTime;
 @Getter
 public class TodoGetResponse {
 
-    private final long id;
     private final String userName;
     private final String title;
     private final String description;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
+    private final int commentCount;
 
     public TodoGetResponse(Todo todo) {
-        this.id = todo.getId();
         this.userName = todo.getUserName();
         this.title = todo.getTitle();
         this.description = todo.getDescription();
         this.createdAt = todo.getCreatedAt();
         this.modifiedAt = todo.getModifiedAt();
+        this.commentCount = todo.getComments().size();
     }
 }

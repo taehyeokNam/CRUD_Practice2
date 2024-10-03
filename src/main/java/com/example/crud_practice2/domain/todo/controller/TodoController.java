@@ -6,6 +6,7 @@ import com.example.crud_practice2.domain.todo.dto.TodoGetResponse;
 import com.example.crud_practice2.domain.todo.dto.TodoUpdateRequest;
 import com.example.crud_practice2.domain.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,4 +31,11 @@ public class TodoController {
         return todoService.getTodo(todoid);
     }
 
+    @GetMapping("/todos")
+    public Page<TodoGetResponse> getTodos(
+            @RequestParam(defaultValue = "1", required = false) int page,
+            @RequestParam(defaultValue = "10", required = false) int size
+    ) {
+        return todoService.getTodos(page, size);
+    }
 }
