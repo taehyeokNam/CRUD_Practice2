@@ -17,13 +17,15 @@ public class User extends Timestamped {
     private Long id;
     private String userName;
     private String email;
+    private String password;
 
 
     @OneToMany(mappedBy = "user")
     private List<Manager> managers;
 
-    public User(String userName, String email) {
+    public User(String userName, String email, String password) {
         this.userName = userName;
         this.email = email;
+        this.password = password;
     }
 }
