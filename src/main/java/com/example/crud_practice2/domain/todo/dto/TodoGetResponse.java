@@ -15,6 +15,7 @@ public class TodoGetResponse {
     private final String userName;
     private final String email;
     private final String description;
+    private final String weather;
     private final List<UserDto> userDtos;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
@@ -27,6 +28,7 @@ public class TodoGetResponse {
         this.userName = todo.getUser().getUserName();
         this.email = todo.getUser().getEmail();
         this.description = todo.getDescription();
+        this.weather = todo.getWeather();
         this.userDtos = userDtos;
         this.createdAt = todo.getCreatedAt();
         this.modifiedAt = todo.getModifiedAt();

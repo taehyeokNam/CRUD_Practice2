@@ -21,6 +21,7 @@ public class Todo extends Timestamped {
     private Long id;
     private String title;
     private String description;
+    private String weather;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -32,9 +33,10 @@ public class Todo extends Timestamped {
     @OneToMany(mappedBy = "todo", cascade = CascadeType.REMOVE)
     List<Comment> comments = new ArrayList<>();
 
-    public Todo(User user, String title, String description) {
+    public Todo(User user, String title, String weather, String description) {
         this.user = user;
         this.title = title;
+        this.weather = weather;
         this.description = description;
     }
 

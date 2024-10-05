@@ -26,15 +26,19 @@ public class TodoService {
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
     private final ManagerRepository managerRepository;
+    private final TodoWeatherService todoWeatherService;
 
     @Transactional
     public TodoCreateResponse createTodo(TodoCreateRequest todoCreateRequest) {
 
         User user = userRepository.findById(todoCreateRequest.getUserId()).orElseThrow(()-> new NullPointerException("존재하지 않는 유저입니다"));
 
+        String todayWeather = todoWeatherService.getTodayWeather();
+
         Todo newTodo = new Todo(
                 user,
                 todoCreateRequest.getTitle(),
+                todayWeather,
                 todoCreateRequest.getDescription()
         );
 

@@ -12,6 +12,7 @@ public class TodoCreateResponse {
     private final String userName;
     private final String title;
     private final String description;
+    private final String weather;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
@@ -20,6 +21,7 @@ public class TodoCreateResponse {
         this.userName = todo.getUser().getUserName();
         this.title = todo.getTitle();
         this.description = todo.getDescription();
+        this.weather = todo.getWeather();
         this.createdAt = todo.getCreatedAt();
         this.modifiedAt = todo.getModifiedAt();
     }
