@@ -13,7 +13,7 @@ public class CommentGetResponse {
     private final LocalDateTime modifiedAt;
 
     public CommentGetResponse(Comment comment) {
-        this.userName = comment.getUserName();
+        this.userName = comment.getUser().getUserName();
         this.description = comment.getDescription();
         this.modifiedAt = comment.getModifiedAt();
     }

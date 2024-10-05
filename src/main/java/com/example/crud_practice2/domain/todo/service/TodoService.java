@@ -1,11 +1,13 @@
 package com.example.crud_practice2.domain.todo.service;
 
-import com.example.crud_practice2.domain.todo.dto.TodoCreateRequest;
-import com.example.crud_practice2.domain.todo.dto.TodoCreateResponse;
-import com.example.crud_practice2.domain.todo.dto.TodoGetResponse;
-import com.example.crud_practice2.domain.todo.dto.TodoUpdateRequest;
+import com.example.crud_practice2.domain.manager.entity.Manager;
+import com.example.crud_practice2.domain.manager.repository.ManagerRepository;
+import com.example.crud_practice2.domain.todo.dto.*;
 import com.example.crud_practice2.domain.todo.entity.Todo;
 import com.example.crud_practice2.domain.todo.respository.TodoRepository;
+import com.example.crud_practice2.domain.user.dto.UserDto;
+import com.example.crud_practice2.domain.user.entity.User;
+import com.example.crud_practice2.domain.user.respository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,18 +15,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class TodoService {
 
     private final TodoRepository todoRepository;
+    private final UserRepository userRepository;
+    private final ManagerRepository managerRepository;
 
     @Transactional
     public TodoCreateResponse createTodo(TodoCreateRequest todoCreateRequest) {
 
+        User user = userRepository.findById(todoCreateRequest.getUserId()).orElseThrow(()-> new NullPointerException("존재하지 않는 유저입니다"));
+
         Todo newTodo = new Todo(
-                todoCreateRequest.getUserName(),
+                user,
                 todoCreateRequest.getTitle(),
                 todoCreateRequest.getDescription()
         );
@@ -38,15 +47,23 @@ public class TodoService {
 
         Todo todo = todoRepository.findById(todoId).orElseThrow(()-> new NullPointerException("존재하지 않는 일정입니다"));
 
-        return new TodoGetResponse(todo);
+        List<UserDto> userDtos = new ArrayList<>();
+        List<Manager> managers = managerRepository.findAllByTodoId(todo.getId());
+
+        for (Manager manager : managers) {
+            User user = userRepository.findById(manager.getUser().getId()).orElseThrow(()-> new NullPointerException("존재하지 않는 유저입니다."));
+            userDtos.add(new UserDto(user));
+        }
+
+        return new TodoGetResponse(todo, userDtos);
     }
 
     @Transactional
     public long updateTodo(long todoId, TodoUpdateRequest todoUpdateRequest) {
+
         Todo todo = todoRepository.findById(todoId).orElseThrow(()-> new NullPointerException("존재하지 않는 일정입니다."));
 
         todo.updateTodo(
-                todoUpdateRequest.getUserName(),
                 todoUpdateRequest.getTitle(),
                 todoUpdateRequest.getDescription()
         );
@@ -54,12 +71,12 @@ public class TodoService {
         return todoId;
     }
 
-    public Page<TodoGetResponse> getTodos(int page, int size) {
+    public Page<TodoGetSimpleRepsonse> getTodos(int page, int size) {
 
         Pageable pageable = PageRequest.of(page - 1, size);
 
         Page<Todo> todos = todoRepository.findAllByOrderByModifiedAtDesc(pageable);
 
-        return todos.map(todo -> new TodoGetResponse(todo));
+        return todos.map(TodoGetSimpleRepsonse::new);
     }
 }

@@ -5,7 +5,6 @@ import lombok.Getter;
 @Getter
 public class TodoUpdateRequest {
 
-    private String userName;
     private String title;
     private String description;
 }

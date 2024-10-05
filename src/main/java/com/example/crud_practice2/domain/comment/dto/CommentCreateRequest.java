@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class CommentCreateRequest {
 
-    private String userName;
+    private long userId;
     private String description;
 
 }

@@ -8,6 +8,8 @@ import com.example.crud_practice2.domain.comment.entity.Comment;
 import com.example.crud_practice2.domain.comment.respository.CommentRepository;
 import com.example.crud_practice2.domain.todo.entity.Todo;
 import com.example.crud_practice2.domain.todo.respository.TodoRepository;
+import com.example.crud_practice2.domain.user.entity.User;
+import com.example.crud_practice2.domain.user.respository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +24,17 @@ public class CommentService {
 
     private final TodoRepository todoRepository;
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public CommentCreateResponse createComment(long todoId, CommentCreateRequest commentCreateRequest) {
 
         Todo todo = todoRepository.findById(todoId).orElseThrow(()-> new NullPointerException("존재하지 않는 일정입니다"));
+        User user = userRepository.findById(commentCreateRequest.getUserId()).orElseThrow(()-> new NullPointerException("존재하지 않는 유저입니다"));
 
         Comment comment = new Comment(
                 todo,
-                commentCreateRequest.getUserName(),
+                user,
                 commentCreateRequest.getDescription()
         );
 
@@ -65,7 +69,6 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new NullPointerException("존재하지 않는 댓글입니다."));
 
         comment.updateComment(
-                commentUpdateRequest.getUserName(),
                 commentUpdateRequest.getDescription()
         );
 

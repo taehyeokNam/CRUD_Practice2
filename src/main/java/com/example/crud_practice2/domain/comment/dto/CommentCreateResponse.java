@@ -12,7 +12,7 @@ public class CommentCreateResponse {
 
     public CommentCreateResponse(Comment comment) {
         this.id = comment.getId();
-        this.userName = comment.getUserName();
+        this.userName = comment.getUser().getUserName();
         this.description = comment.getDescription();
     }
 }

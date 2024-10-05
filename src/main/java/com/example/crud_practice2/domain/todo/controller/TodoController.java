@@ -1,9 +1,6 @@
 package com.example.crud_practice2.domain.todo.controller;
 
-import com.example.crud_practice2.domain.todo.dto.TodoCreateRequest;
-import com.example.crud_practice2.domain.todo.dto.TodoCreateResponse;
-import com.example.crud_practice2.domain.todo.dto.TodoGetResponse;
-import com.example.crud_practice2.domain.todo.dto.TodoUpdateRequest;
+import com.example.crud_practice2.domain.todo.dto.*;
 import com.example.crud_practice2.domain.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,7 +29,7 @@ public class TodoController {
     }
 
     @GetMapping("/todos")
-    public Page<TodoGetResponse> getTodos(
+    public Page<TodoGetSimpleRepsonse> getTodos(
             @RequestParam(defaultValue = "1", required = false) int page,
             @RequestParam(defaultValue = "10", required = false) int size
     ) {

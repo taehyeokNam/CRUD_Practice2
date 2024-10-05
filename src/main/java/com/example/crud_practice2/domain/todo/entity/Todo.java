@@ -2,6 +2,8 @@ package com.example.crud_practice2.domain.todo.entity;
 
 import com.example.crud_practice2.common.Timestamped;
 import com.example.crud_practice2.domain.comment.entity.Comment;
+import com.example.crud_practice2.domain.manager.entity.Manager;
+import com.example.crud_practice2.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,21 +19,26 @@ public class Todo extends Timestamped {
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "todo_id")
     private Long id;
-    private String userName;
     private String title;
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "todo")
+    List<Manager> managers = new ArrayList<>();
 
     @OneToMany(mappedBy = "todo", cascade = CascadeType.REMOVE)
     List<Comment> comments = new ArrayList<>();
 
-    public Todo(String userName, String title, String description) {
-        this.userName = userName;
+    public Todo(User user, String title, String description) {
+        this.user = user;
         this.title = title;
         this.description = description;
     }
 
-    public void updateTodo(String userName, String title, String description) {
-        this.userName = userName;
+    public void updateTodo(String title, String description) {
         this.title = title;
         this.description = description;
     }
