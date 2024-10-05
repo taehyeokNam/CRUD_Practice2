@@ -79,4 +79,9 @@ public class TodoService {
 
         return todos.map(TodoGetSimpleRepsonse::new);
     }
+
+    @Transactional
+    public void deleteTodo(long todoId) {
+        todoRepository.deleteById(todoId);
+    }
 }

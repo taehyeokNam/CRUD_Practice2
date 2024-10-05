@@ -2,8 +2,6 @@ package com.example.crud_practice2.domain.user.service;
 
 import com.example.crud_practice2.common.JwtUtil;
 import com.example.crud_practice2.common.PasswordEncoder;
-import com.example.crud_practice2.domain.user.dto.UserCreateRequest;
-import com.example.crud_practice2.domain.user.dto.UserCreateResponse;
 import com.example.crud_practice2.domain.user.dto.UserGetResponse;
 import com.example.crud_practice2.domain.user.entity.User;
 import com.example.crud_practice2.domain.user.respository.UserRepository;
@@ -23,31 +21,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    @Transactional
-    public UserCreateResponse createUser(UserCreateRequest userCreateRequest) {
-
-        if (userRepository.existsByEmail(userCreateRequest.getEmail())) {
-            throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
-        }
-
-        String encodedPassword = passwordEncoder.encode(userCreateRequest.getPassword());
-
-        User user = new User(
-                userCreateRequest.getUserName(),
-                userCreateRequest.getEmail(),
-                encodedPassword
-        );
-
-        User savedUser = userRepository.save(user);
-
-        String bearerToken = jwtUtil.createToken(
-                savedUser.getId(),
-                savedUser.getUserName(),
-                savedUser.getEmail()
-        );
-
-        return new UserCreateResponse(bearerToken);
-    }
 
     public UserGetResponse getUser(long userId) {
 
